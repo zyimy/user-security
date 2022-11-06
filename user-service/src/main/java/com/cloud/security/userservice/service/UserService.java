@@ -129,7 +129,6 @@ public class UserService {
     } else {
       result.put("Bikes", bikes);
     }
-
     return result;
   }
 
