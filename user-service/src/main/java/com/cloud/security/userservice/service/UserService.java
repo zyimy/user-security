@@ -87,7 +87,7 @@ public class UserService {
     car.setUserId(userId);
     log.info("Llamando a car-service para guardar un CAR con userId {} ", userId);
     try {
-      return carfeingClient.save(car);
+      return restTemplate.postForObject("http://car-service/v1/car",car,Car.class);
     } catch (FeignException ex) {
       log.error("Fallo llamando a feing {} ", ex);
       throw new RuntimeException("Fallo feing", ex);
@@ -98,7 +98,7 @@ public class UserService {
     bike.setUserId(userId);
     log.info("Llamando a bike-service para guardar un BIKE con userId {} ", userId);
     try {
-      return bikeFeingClient.save(bike);
+      return restTemplate.postForObject("http://bike-service/v1/bike",bike,Bike.class);
     } catch (FeignException ex) {
       log.error("Fallo llamando a feing {} ", ex);
       throw new RuntimeException("Fallo feing", ex);
@@ -116,14 +116,14 @@ public class UserService {
     }
 
     result.put("User", user);
-    List<Car> cars = carfeingClient.getCars(userId);
+    List<Car> cars = restTemplate.getForObject("http://car-service/v1/car/byUserId/" + userId, List.class);
     if (cars.isEmpty()) {
       result.put("Cars", "ese user no tiene coches");
     } else {
       result.put("cars", cars);
     }
 
-    List<Bike> bikes = bikeFeingClient.getBikes(userId);
+    List<Bike> bikes = restTemplate.getForObject("http://bike-service/v1/bike/byUserId/" + userId, List.class);
     if (bikes.isEmpty()) {
       result.put("Bikes", "Ese user no tiene motos");
     } else {
