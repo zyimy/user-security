@@ -20,12 +20,12 @@ eureka:
            - id: user-service
              uri: lb://user-service
              predicates:
-               - Path=/v1/user/**
+               - path=/v1/user/**
            - id: car-service
              uri: lb://car-service
              predicates:
-               - Path=/v1/car/**
+               - path=/v1/car/**
            - id: bike-service
              uri: lb://bike-service
              predicates:
-               - Path=/v1/bike/**
+               - path=/v1/bike/**
