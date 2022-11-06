@@ -66,7 +66,7 @@ public class UserService {
   public List<Car> getCars(Integer userId) {
     log.info("Llamando a car-service para obtener sus CARS con id {} ", userId);
     try {
-      return restTemplate.getForObject("http://localhost:8002/v1/car/byUserId/" + userId, List.class);
+      return restTemplate.getForObject("http://car-service/v1/car/byUserId/" + userId, List.class);
     } catch (Exception ex) {
       log.error("Error en restTemplate {}", ex.getMessage());
       throw new RuntimeException("Error en restTemplate", ex);
@@ -76,7 +76,7 @@ public class UserService {
   public List<Bike> getBikes(Integer userId) {
     log.info("Llamando a Bike-service para obtener sus BIKES con id {} ", userId);
     try {
-      return restTemplate.getForObject("http://localhost:8003/v1/bike/byUserId/" + userId, List.class);
+      return restTemplate.getForObject("http://bike-service/v1/bike/byUserId/" + userId, List.class);
     } catch (Exception ex) {
       log.error("Error en restTemplate {}", ex.getMessage());
       throw new RuntimeException("Error en restTemplate", ex);

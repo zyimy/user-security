@@ -8,9 +8,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
-@FeignClient(name = "bike-service", url = "http://localhost:8003/v1/bike")
+@FeignClient(name = "bike-service",url = "http://localhost:8003/v1/bike")
 public interface BikeFeingClient {
-
   @PostMapping()
   public Bike save(@RequestBody Bike bike);
 
