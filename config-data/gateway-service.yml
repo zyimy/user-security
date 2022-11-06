@@ -8,22 +8,22 @@ eureka:
       default-zone: http://localhost:8761/eureka
   instance:
     hostname: localhost
-spring:
-  cloud:
-    gateway:
-      discovery:
-        locator:
-          enabled: true
-      routes:
-        -  id: user-service
-           uri: lb://user-service
-           predicates:
-            - Path=/v1/user/**
-        -  id: car-service
-           uri: lb://car-service
-           predicates:
-            - Path=/v1/car/**
-        -  id: bike-service
-           uri: lb://bike-service
-           predicates:
-            - Path=/v1/bike/**
+  spring:
+    cloud:
+      gateway:
+         discovery:
+           locator:
+             enabled: true
+         routes:
+           - id: user-service
+             uri: lb://user-service
+             predicates:
+               - Path=/v1/user/**
+           - id: car-service
+             uri: lb://car-service
+             predicates:
+               - Path=/v1/car/**
+           - id: bike-service
+             uri: lb://bike-service
+             predicates:
+               - Path=/v1/bike/**
