@@ -2,6 +2,8 @@ package com.practicas.authservice.service;
 
 import antlr.Token;
 import com.practicas.authservice.dto.AuthUserDto;
+import com.practicas.authservice.dto.NewUserDto;
+import com.practicas.authservice.dto.RequestDto;
 import com.practicas.authservice.dto.TokenDto;
 import com.practicas.authservice.entity.AuthUser;
 import com.practicas.authservice.repository.AuthUserRepository;
@@ -23,15 +25,16 @@ public class AuthUserService {
   @Autowired
   private JwtProvider jwtProvider;
 
-  public AuthUser save(AuthUserDto dto){
+  public AuthUser save(NewUserDto dto){
     Optional<AuthUser>user = authUserRepository.findByUserName(dto.getUserName());
-    if (!user.isPresent())
+    if (user.isPresent())
         return null;
     String password = passwordEncoder.encode(dto.getPassword());
     AuthUser authUser = AuthUser
         .builder()
         .userName(dto.getUserName())
         .password(password)
+        .role(dto.getRole())
         .build();
     return authUserRepository.save(authUser);
 
@@ -47,8 +50,8 @@ public class AuthUserService {
     return null;
   }
 
-  public TokenDto validate(String token){
-    if (jwtProvider.validate(token))
+  public TokenDto validate(String token, RequestDto dto){
+    if (!jwtProvider.validate(token,dto))
         return null;
     String username = jwtProvider.getUserNameFromToken(token);
     if (!authUserRepository.findByUserName(username).isPresent())
